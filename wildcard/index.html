@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="yellow" data-game="wildcard">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>WILDCARD // 2077</title>
+  <meta name="description" content="WILDCARD // 2077: a neon card-shedding game for 2 to 4 players on your phone. Match colour or number, stack the penalties, bots fill empty seats.">
+  <link rel="icon" href="/portfolio/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../shared/cyber-theme.css">
+  <link rel="stylesheet" href="style.css?v=20261120b">
+  <link rel="stylesheet" href="../shared/cabinet.css?v=20261120">
+  <script type="module" src="../shared/cabinet.js?v=20261120"></script>
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header id="hud">
+    <a class="hub-link cyber-clip-sm" id="hubLink" href="../" data-i="hub">◢ CYBER HUB</a>
+    <h1 class="wc-title" id="wcTitle">WILDCARD // 2077</h1>
+    <span class="acct-badge" id="acctBadge" hidden></span>
+    <div class="hud-actions">
+      <button type="button" id="bLang" class="hud-btn cyber-clip-sm" aria-label="Language">עב</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <noscript><p class="wc-error">This game needs JavaScript.</p></noscript>
+
+    <!-- 1. Connect: name, create, join -->
+    <section id="screenConnect" class="screen" aria-labelledby="wcTitle">
+      <p class="tagline" id="tagline"></p>
+      <p class="notice" id="guestNotice" hidden></p>
+
+      <div class="panel field-row">
+        <label for="nameInput" id="nameLabel"></label>
+        <input id="nameInput" type="text" maxlength="16" autocomplete="nickname" autocapitalize="words" spellcheck="false">
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title" id="createTitle"></h2>
+        <div class="opt-row" role="group" aria-labelledby="seatsLabel">
+          <span id="seatsLabel" class="opt-label"></span>
+          <div class="seg" id="seatsSeg"></div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-label" id="stackLabel"></span>
+          <button type="button" class="toggle" id="stackToggle" role="switch" aria-checked="false" aria-labelledby="stackLabel"><i></i></button>
+        </div>
+        <div class="opt-row" role="group" aria-labelledby="timerLabel">
+          <span id="timerLabel" class="opt-label"></span>
+          <div class="seg" id="timerSeg"></div>
+        </div>
+        <button type="button" id="createBtn" class="cyber-btn wide"></button>
+      </div>
+
+      <form class="panel" id="joinForm" autocomplete="off">
+        <h2 class="panel-title" id="joinTitle"></h2>
+        <div class="join-row">
+          <input id="codeInput" type="text" inputmode="text" maxlength="5" autocapitalize="characters" spellcheck="false" aria-labelledby="joinTitle" dir="ltr">
+          <button type="submit" id="joinBtn" class="cyber-btn"></button>
+        </div>
+        <small class="hint" id="codeHint"></small>
+      </form>
+
+      <p class="wc-error" id="connectError" role="alert" hidden></p>
+    </section>
+
+    <!-- 2. Room lobby -->
+    <section id="screenLobby" class="screen" hidden></section>
+
+    <!-- 3. Table -->
+    <section id="screenTable" class="screen table" hidden></section>
+  </main>
+
+  <div id="overlayColor" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="pickTitle">
+    <div class="modal-panel">
+      <h2 class="modal-title" id="pickTitle"></h2>
+      <div class="color-grid" id="colorGrid"></div>
+    </div>
+  </div>
+  <div id="overlayEnd" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="endTitle"></div>
+
+  <div id="banner" class="banner" role="status" aria-live="polite" hidden></div>
+  <div id="toast" class="toast" role="alert" hidden></div>
+  <div id="srLive" class="sr-only" aria-live="polite"></div>
+
+  <script type="module" src="js/main.js?v=20261120b"></script>
+</body>
+</html>

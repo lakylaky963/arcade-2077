@@ -387,7 +387,54 @@ function lightcycle(c, w, h, t, s) {
   s.sparks = s.sparks.filter((sp) => sp.l > 0);
 }
 
-const SCENES = { defender, icebreaker, blackwall, neonvector, protocol, overclock, lightcycle };
+// ---------- 8. WILDCARD // 2077: neon cards fly onto a discard pile, the colour ring flips with each play ----------
+function wildcard(c, w, h, t, s) {
+  const COLS = ['#ff2a55', '#fcee09', '#00ff9f', '#00b4ff'];
+  if (!s.init) { s.init = true; s.fly = []; s.pile = []; s.spawn = 0; s.ring = COLS[3]; }
+  const dt = s.dt;
+  const glow = s.lowFps ? 0 : 1;
+  c.fillStyle = '#06070d'; c.fillRect(0, 0, w, h);
+  const cx = w * .5, cy = h * .5;
+  const cw = Math.min(w * .17, 46), ch = cw * 1.5;
+  // table glow in the colour of the last card
+  const g = c.createRadialGradient(cx, cy, 4, cx, cy, Math.max(w, h) * .6);
+  g.addColorStop(0, hexA(s.ring, .22)); g.addColorStop(1, 'rgba(6,7,13,0)');
+  c.fillStyle = g; c.fillRect(0, 0, w, h);
+  c.strokeStyle = 'rgba(255,255,255,.05)'; c.lineWidth = 1;
+  for (let x = 0; x < w; x += 18) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
+  // colour ring
+  c.strokeStyle = hexA(s.ring, .55 + Math.sin(t * 3) * .15); c.lineWidth = 2;
+  c.beginPath(); c.arc(cx, cy, ch * .82, 0, TAU); c.stroke();
+  const card = (x, y, rot, col) => {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    const k = 5;
+    c.beginPath(); c.moveTo(-cw / 2 + k, -ch / 2); c.lineTo(cw / 2, -ch / 2); c.lineTo(cw / 2, ch / 2 - k); c.lineTo(cw / 2 - k, ch / 2); c.lineTo(-cw / 2, ch / 2); c.lineTo(-cw / 2, -ch / 2 + k); c.closePath();
+    if (col === 'wild') {
+      c.fillStyle = '#161926'; c.fill();
+      COLS.forEach((cc, i) => { const a = i * TAU / 4; c.fillStyle = cc; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(a) * cw * .36, Math.sin(a) * cw * .36); c.lineTo(Math.cos(a + TAU / 4) * cw * .36, Math.sin(a + TAU / 4) * cw * .36); c.closePath(); c.fill(); });
+    } else { c.fillStyle = col; c.fill(); c.fillStyle = 'rgba(7,8,13,.85)'; c.fillRect(-cw * .12, -ch * .2, cw * .24, ch * .4); }
+    c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1; c.stroke();
+    c.restore();
+  };
+  for (const p of s.pile) card(p.x, p.y, p.r, p.col);
+  s.spawn -= dt;
+  if (s.spawn <= 0) {
+    s.spawn = rand(.5, .85);
+    const side = Math.random() < .5 ? -1 : 1;
+    s.fly.push({ x0: cx + side * w * .62, y0: h * rand(.65, 1), r0: side * rand(.7, 1.3), p: 0, col: Math.random() < .14 ? 'wild' : COLS[(Math.random() * 4) | 0], tx: cx + rand(-5, 5), ty: cy + rand(-4, 4), tr: rand(-.4, .4) });
+  }
+  for (const f of s.fly) {
+    f.p = Math.min(1, f.p + dt * 1.7);
+    const e = 1 - Math.pow(1 - f.p, 3);
+    if (glow) { c.shadowColor = f.col === 'wild' ? '#ffffff' : f.col; c.shadowBlur = 10; }
+    card(f.x0 + (f.tx - f.x0) * e, f.y0 + (f.ty - f.y0) * e - Math.sin(f.p * Math.PI) * h * .14, f.r0 + (f.tr - f.r0) * e, f.col);
+    c.shadowBlur = 0;
+    if (f.p >= 1) { s.pile.push({ x: f.tx, y: f.ty, r: f.tr, col: f.col }); if (s.pile.length > 6) s.pile.shift(); s.ring = f.col === 'wild' ? COLS[(Math.random() * 4) | 0] : f.col; }
+  }
+  s.fly = s.fly.filter((f) => f.p < 1);
+}
+
+const SCENES = { defender, icebreaker, blackwall, neonvector, protocol, overclock, lightcycle, wildcard };
 
 export function startPreviews(canvases) {
   const reduce = globalThis.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;

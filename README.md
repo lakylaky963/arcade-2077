@@ -16,16 +16,18 @@ Live: https://avrahamarazi.com/game/ (also avraham.dev and the Tailscale Funnel 
 | `protocol/` | Breach Protocol: hex-matrix hacking roguelike |
 | `overclock/` | Overclock // ICE Shatter: brick breaker with power-ups |
 | `lightcycle/` | Lightcycle: buffered-turn arena |
+| `wildcard/` | WILDCARD // 2077: multiplayer phone card game client (plain JS, vendored `@colyseus/sdk` in `wildcard/vendor/`, talks to `wildcard-server/`) |
 
 `hub/` is the lobby: the live neon-city background (`bg.js`, drawn procedurally), game cards, Street Cred XP,
 eddies (`€$`), trophies and leaderboards. `shared/` holds what every cabinet loads: the cyberpunk theme,
 the hub SDK (profile, runs, trophies) and the cabinet skin (`cabinet.css/js`).
 
-## WILDCARD // 2077 (in progress)
+## WILDCARD // 2077 (8th cabinet)
 
 `wildcard-server/` is the Colyseus game server for the 8th cabinet, our Uno (game id `wildcard`). It is a
 Node service, not static files: see [`wildcard-server/README.md`](wildcard-server/README.md). The phone client
-`wildcard/` and the hub entry come in the next steps; nothing in the hub changes yet.
+`wildcard/` is the phone client (plain JS, no build step). It needs the vendored SDK in `wildcard/vendor/`
+(`node wildcard/vendor/vendor.mjs`, see its README). Deploying client and server is step D.
 
 ## How it fits the homelab
 

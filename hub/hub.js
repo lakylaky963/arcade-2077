@@ -5,11 +5,11 @@ import {
   getLang, setLang, getMuted, setMuted, getTheme, setTheme, nextTheme, prevTheme,
   resetProfile, markLaunched, getGame,
   getAuth, signInOrRegister, signInHomelab, signOutAndFlush, fetchLeaderboard, hasMidRun, pullSession,
-} from '../shared/hub-sdk.js';
-import { t as tr } from './i18n.js?v=20261120';
+} from '../shared/hub-sdk.js?v=20261120b';
+import { t as tr } from './i18n.js?v=20261120b';
 import * as audio from './audio.js';
 import { startBackground } from './bg.js?v=20261120';
-import { startPreviews } from './previews.js';
+import { startPreviews } from './previews.js?v=20261120b';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -737,7 +737,7 @@ function bind() {
     const vis = visibleCards();
     const rtl = lang === 'he';
     const k = e.key;
-    if (/^[1-7]$/.test(k)) {
+    if (/^[1-8]$/.test(k)) {
       const target = GAMES_META[Number(k) - 1];
       if (target) { e.preventDefault(); launch(target.id); }
       return;
