@@ -1,0 +1,27 @@
+{
+  "name": "wildcard-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "WILDCARD // 2077 game server (Uno, 8th Night Lab // Arcade 2077 cabinet). Colyseus 0.17.",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@colyseus/core": "^0.17.0",
+    "@colyseus/schema": "^4.0.7",
+    "@colyseus/tools": "^0.17.0",
+    "colyseus": "^0.17.0",
+    "express": "^4.21.0",
+    "mongodb": "^6.10.0",
+    "tsx": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.8.0"
+  }
+}
