@@ -70,6 +70,13 @@ export const GAMES_META = Object.freeze([
     descEn: 'Tron light-cycle duels vs Corp Hunters. Trigger Phase Cloak to cut through enemy trails.',
     descHe: 'דו-קרב אופנועי אור נגד ציידי תאגיד. הפעילו חמקנות פאזה לחציית שובלים.',
   },
+  {
+    id: 'wildcard', path: 'wildcard/', accent: '#ff5c8a', genre: 'cards', key: '8',
+    titleEn: 'WILDCARD // 2077', titleHe: 'ווילדקארד // 2077',
+    tagEn: 'MULTIPLAYER CARDS', tagHe: 'קלפים מרובי משתתפים',
+    descEn: 'Shed your hand in 2-4 player neon card duels on your phone. Stack the penalties, bots fill empty seats.',
+    descHe: 'פטרו את היד בדו-קרבי קלפים של 2 עד 4 שחקנים בטלפון. הצטברות עונשים, ובוטים ממלאים מושבים ריקים.',
+  },
 ].map(Object.freeze));
 
 export const GAME_IDS = GAMES_META.map((g) => g.id);
@@ -113,7 +120,7 @@ export const ACHIEVEMENTS = Object.freeze([
   A('street_kid', '◆', 5, lvl, 'Street Kid', 'ילד רחוב', 'Reach Street Cred level 5.', 'הגיעו לרמת מוניטין 5.'),
   A('legend', '★', 10, lvl, 'Night Lab Legend', 'אגדת המעבדה', 'Reach Street Cred level 10.', 'הגיעו לרמת מוניטין 10.'),
   A('multi_runner', '⇄', 3, distinctGames, 'Multi-Runner', 'רץ רב-ערוצי', 'Play 3 different games.', 'שחקו ב-3 משחקים שונים.'),
-  A('all_access', '▣', 7, distinctGames, 'All-Access', 'גישה מלאה', 'Play all 7 games.', 'שחקו בכל 7 המשחקים.'),
+  A('all_access', '▣', 8, distinctGames, 'All-Access', 'גישה מלאה', 'Play all 8 games.', 'שחקו בכל 8 המשחקים.'),
   A('hoarder', '€', 5000, (p) => p.eddiesEarned, 'Eddies Hoarder', 'אוגר יורודולרים', 'Earn 5,000 €$ across all runs.', 'צברו 5,000 €$ בכל הריצות.'),
   A('defender_win', '⛨', 1, wins('defender'), 'Rack Secured', 'הארון מאובטח', 'Win a full Homelab Defender run.', 'נצחו ריצה מלאה במגן ההומלאב.', 'defender'),
   A('defender_score', '⌁', 5000, best('defender'), 'Uptime Five Nines', 'זמינות חמש תשיעיות', 'Score 5,000+ in Homelab Defender.', 'השיגו 5,000+ נקודות במגן ההומלאב.', 'defender'),
@@ -129,6 +136,8 @@ export const ACHIEVEMENTS = Object.freeze([
   A('overclock_score', '❖', 15000, best('overclock'), 'Capacitor Chain', 'שרשרת קבלים', 'Score 15,000+ in OVERCLOCK.', 'השיגו 15,000+ נקודות באוברקלוק.', 'overclock'),
   A('lightcycle_win', '⟐', 1, wins('lightcycle'), 'Grid Sovereign', 'שליט הרשת', 'Win a LIGHTCYCLE // Trace tournament.', 'נצחו טורניר באופנוע אור // עקבות.', 'lightcycle'),
   A('lightcycle_score', '⟁', 8000, best('lightcycle'), 'Phase Phantom', 'רוח פאזה', 'Score 8,000+ in LIGHTCYCLE.', 'השיגו 8,000+ נקודות באופנוע אור.', 'lightcycle'),
+  A('wildcard_win', '♦', 1, wins('wildcard'), 'Last Card Standing', 'הקלף האחרון', 'Win a WILDCARD // 2077 match as a signed-in player.', 'נצחו משחק ב-ווילדקארד // 2077 כשאתם מחוברים.', 'wildcard'),
+  A('wildcard_score', '✪', 200, best('wildcard'), 'Hand Hacker', 'פורץ ידיים', 'Win a WILDCARD // 2077 match worth 200+ points.', 'נצחו משחק ב-ווילדקארד // 2077 בשווי 200+ נקודות.', 'wildcard'),
 ]);
 
 const ACH_IDS = new Set(ACHIEVEMENTS.map((a) => a.id));

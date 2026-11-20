@@ -20,11 +20,11 @@ test('module imports in Node without window/localStorage', () => {
   assert.equal(sdk.API_BASE, '/game/api');
 });
 
-test('GAMES_META has 7 unique, complete game entries', () => {
-  assert.equal(sdk.GAMES_META.length, 7);
+test('GAMES_META has 8 unique, complete game entries', () => {
+  assert.equal(sdk.GAMES_META.length, 8);
   assert.deepEqual(
     sdk.GAMES_META.map((g) => g.id),
-    ['defender', 'icebreaker', 'blackwall', 'neonvector', 'protocol', 'overclock', 'lightcycle'],
+    ['defender', 'icebreaker', 'blackwall', 'neonvector', 'protocol', 'overclock', 'lightcycle', 'wildcard'],
   );
   for (let i = 0; i < sdk.GAMES_META.length; i++) {
     const g = sdk.GAMES_META[i];
@@ -35,32 +35,34 @@ test('GAMES_META has 7 unique, complete game entries', () => {
     assert.equal(g.key, String(i + 1));
     assert.match(g.accent, /^#[0-9a-f]{6}$/i);
     assert.match(g.titleHe, /[֐-׿]/, `${g.id} Hebrew title`);
-    assert.ok(['defense', 'action', 'hacking'].includes(g.genre));
+    assert.ok(['defense', 'action', 'hacking', 'cards'].includes(g.genre));
   }
   assert.equal(sdk.getGame('protocol').accent, '#00ff9f');
   assert.equal(sdk.getGame('overclock').accent, '#ffaa00');
   assert.equal(sdk.getGame('lightcycle').accent, '#00e5ff');
+  assert.equal(sdk.getGame('wildcard').accent, '#ff5c8a');
+  assert.equal(sdk.getGame('wildcard').genre, 'cards');
   assert.equal(sdk.getGame('nope'), null);
 });
 
-test('ACHIEVEMENTS: 20 unique ids, bilingual, 2 per game, all_access goal = 7', () => {
-  assert.equal(sdk.ACHIEVEMENTS.length, 20);
-  assert.equal(new Set(sdk.ACHIEVEMENTS.map((a) => a.id)).size, 20);
+test('ACHIEVEMENTS: 22 unique ids, bilingual, 2 per game, all_access goal = 8', () => {
+  assert.equal(sdk.ACHIEVEMENTS.length, 22);
+  assert.equal(new Set(sdk.ACHIEVEMENTS.map((a) => a.id)).size, 22);
   for (const a of sdk.ACHIEVEMENTS) {
     assert.ok(a.titleEn && a.titleHe && a.descEn && a.descHe && a.icon);
     assert.ok(a.goal > 0 && typeof a.metric === 'function');
   }
   for (const id of sdk.GAME_IDS) assert.equal(sdk.ACHIEVEMENTS.filter((a) => a.game === id).length, 2);
   const allAccess = sdk.ACHIEVEMENTS.find((a) => a.id === 'all_access');
-  assert.equal(allAccess.goal, 7);
+  assert.equal(allAccess.goal, 8);
 });
 
-test('fresh profile is created with zeroed stats and defaults for all 7 games', () => {
+test('fresh profile is created with zeroed stats and defaults for all 8 games', () => {
   const p = sdk.getProfile();
   assert.equal(p.xp, 0);
   assert.equal(p.eddies, 0);
   assert.deepEqual(p.scores, {
-    defender: 0, icebreaker: 0, blackwall: 0, neonvector: 0, protocol: 0, overclock: 0, lightcycle: 0,
+    defender: 0, icebreaker: 0, blackwall: 0, neonvector: 0, protocol: 0, overclock: 0, lightcycle: 0, wildcard: 0,
   });
   assert.deepEqual(p.history, []);
   assert.equal(p.settings.theme, 'yellow');
@@ -165,12 +167,12 @@ test('achievements: first jack-in, wins, score thresholds, overclock/lightcycle,
   assert.ok(r5.unlockedAchievements.includes('lightcycle_score'));
 });
 
-test('achievements: multi-runner, all-access (7 games), hoarder, levels', () => {
+test('achievements: multi-runner, all-access (8 games), hoarder, levels', () => {
   let r;
   for (const id of sdk.GAME_IDS) r = sdk.recordRun(id, { score: 1, eddies: 1000, xp: 1000 });
   const p = sdk.getProfile();
   for (const id of ['multi_runner', 'all_access', 'hoarder', 'street_kid', 'legend']) assert.ok(p.achievements[id], id);
-  assert.equal(p.eddies, 7000);
+  assert.equal(p.eddies, 8000);
   assert.ok(r.unlockedAchievements.includes('all_access'));
   assert.equal(sdk.achievementProgress(p, 'all_access').pct, 100);
 });
