@@ -21,6 +21,12 @@ Live: https://avrahamarazi.com/game/ (also avraham.dev and the Tailscale Funnel 
 eddies (`€$`), trophies and leaderboards. `shared/` holds what every cabinet loads: the cyberpunk theme,
 the hub SDK (profile, runs, trophies) and the cabinet skin (`cabinet.css/js`).
 
+## WILDCARD // 2077 (in progress)
+
+`wildcard-server/` is the Colyseus game server for the 8th cabinet, our Uno (game id `wildcard`). It is a
+Node service, not static files: see [`wildcard-server/README.md`](wildcard-server/README.md). The phone client
+`wildcard/` and the hub entry come in the next steps; nothing in the hub changes yet.
+
 ## How it fits the homelab
 
 - Static files only. Served by nginx in its own LXC container (`CT 112 arcade`, `10.0.0.153`).
@@ -32,7 +38,7 @@ the hub SDK (profile, runs, trophies) and the cabinet skin (`cabinet.css/js`).
 
 ```sh
 python3 -m http.server 8080      # then open http://localhost:8080/
-node --test                      # 242 tests: game engines and hub logic
+node --test                      # game engines, hub logic, deploy guard, and wildcard-server's rules/match tests
 ```
 
 Without the dashboard API the hub runs as a guest (the `/game/api/me` 401 in the console is expected).
@@ -40,6 +46,8 @@ Without the dashboard API the hub runs as a guest (the `/game/api/me` 401 in the
 ## Deploy
 
 `deploy.ps1` (Windows, SSH key to `root@server`) packs the site, pushes it into CT 112 and checks it.
+It never ships `wildcard-server/` (the game server runs in its own container) and aborts if that folder
+ends up in the archive.
 Cloudflare caches JS/CSS in browsers for 4 hours, so when you change a shared file bump the `?v=` on the
 entry points (`index.html`, each game's `index.html`, and the imports in `hub/`).
 

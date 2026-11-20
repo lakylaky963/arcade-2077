@@ -1,0 +1,23 @@
+# Verifies wildcard-server with the real Colyseus packages (the rules/match tests also run without them).
+name: wildcard-server
+
+on:
+  push:
+    paths: ['wildcard-server/**', '.github/workflows/wildcard-server.yml']
+  pull_request:
+    paths: ['wildcard-server/**', '.github/workflows/wildcard-server.yml']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wildcard-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
