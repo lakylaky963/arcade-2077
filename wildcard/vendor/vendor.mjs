@@ -18,7 +18,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const want = process.argv[2] || '0.17';
 if (!/^0\.17(\.\d+)?$/.test(want)) { console.error('Only 0.17.x is allowed (the server runs Colyseus 0.17).'); process.exit(1); }
 
-const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] }).trim();
+const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'], shell: process.platform === 'win32' }).trim();
 const work = mkdtempSync(path.join(tmpdir(), 'wc-vendor-'));
 writeFileSync(path.join(work, 'package.json'), '{"name":"wc-vendor","private":true,"type":"module"}\n');
 
