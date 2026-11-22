@@ -11,7 +11,7 @@ import {
 } from './logic.js';
 
 /** Default loader: the vendored single-file ESM build of @colyseus/sdk. Throws when it has not been vendored yet. */
-export const loadVendoredSdk = () => import('../vendor/colyseus-sdk.mjs?v=20261120b');
+export const loadVendoredSdk = () => import('../vendor/colyseus-sdk.mjs?v=20261122');
 
 const CONSENTED_CLOSE = 4000;
 
