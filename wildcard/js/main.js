@@ -8,7 +8,7 @@ import {
   playersInSeatOrder, opponentsInPlayOrder, seatBadge, normalizeRoomCode, isRoomCode, cleanName,
   joinErrorKey, rejectKey, resolveEndpoint, loadReconnect,
 } from './logic.js';
-import { WildcardNet, loadVendoredSdk } from './net.js';
+import { WildcardNet, loadVendoredSdk } from './net.js?v=20261122';
 
 const $ = (id) => document.getElementById(id);
 const root = document.documentElement;
