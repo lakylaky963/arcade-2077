@@ -98,6 +98,8 @@ export class WildcardRoom extends Room<{ state: RoomState }> {
     state.hostSeat = -1;
     state.direction = 1;
     state.seatCount = options.seats;
+    // Schema numbers start undefined; sync() does `matchNumber += 1`, which would be NaN without this.
+    state.matchNumber = 0;
 
     for (let i = 0; i < options.seats; i++) {
       const player = new PlayerSchema();
